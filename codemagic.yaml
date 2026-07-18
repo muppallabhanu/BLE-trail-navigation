@@ -1,0 +1,28 @@
+workflows:
+  ios-build:
+    name: BLEBikeNavi iOS Build
+
+    environment:
+      xcode: latest
+
+    scripts:
+      - name: Show Xcode Version
+        script: |
+          xcodebuild -version
+
+      - name: List Project Schemes
+        script: |
+          xcodebuild -list -project BLEBikeNavi.xcodeproj
+
+      - name: Build App
+        script: |
+          xcodebuild \
+            -project BLEBikeNavi.xcodeproj \
+            -scheme BLEBikeNavi \
+            -configuration Debug \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+    artifacts:
+      - ~/Library/Developer/Xcode/DerivedData/**/*
