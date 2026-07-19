@@ -1,28 +1,17 @@
 workflows:
-  ios-build:
-    name: BLEBikeNavi iOS Build
+  ios-release:
+    name: BLEBikeNavi Release
 
     environment:
       xcode: latest
 
     scripts:
-      - name: Show Xcode Version
+      - name: Build IPA
         script: |
-          xcodebuild -version
-
-      - name: List Project Schemes
-        script: |
-          xcodebuild -list -project BLEBikeNavi.xcodeproj
-
-      - name: Build App
-        script: |
-          xcodebuild \
-            -project BLEBikeNavi.xcodeproj \
-            -scheme BLEBikeNavi \
-            -configuration Debug \
-            -destination 'generic/platform=iOS' \
-            CODE_SIGNING_ALLOWED=NO \
-            build
+          xcode-project build-ipa \
+            --project "BLEBikeNavi.xcodeproj" \
+            --scheme "BLEBikeNavi"
 
     artifacts:
-      - ~/Library/Developer/Xcode/DerivedData/**/*
+      - build/ios/ipa/*.ipa
+      - build/ios/archive/*.xcarchive
